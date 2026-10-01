@@ -33,3 +33,33 @@ body { margin: 0; background: #f6f8fb; color: #1f2937; }
 .link { border: none; background: none; color: var(--brand); cursor: pointer; padding: 0; }
 .page-foot { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--muted); }
 .error-text { color: #b42318; }
+.data-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
+.data-card h3 { margin: 0 0 10px; font-size: 15px; }
+.detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 12px; }
+.detail-grid.wide { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); }
+.detail-grid dl, .status-list { margin: 0; display: grid; gap: 8px; }
+.detail-grid dt { color: var(--muted); font-size: 12px; }
+.detail-grid dd { margin: 2px 0 0; font-size: 13px; }
+.form-item { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; font-size: 13px; }
+.form-item span { color: var(--muted); font-size: 12px; }
+.form-item input, .form-item textarea, .form-item select, .side-panel input, .side-panel textarea { border: 1px solid var(--border); border-radius: 6px; padding: 7px 8px; font: inherit; }
+.form-item textarea, .side-panel textarea { resize: vertical; }
+.form-inline { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; }
+.form-item.compact { flex: 1; min-width: 140px; }
+.form-item.small { max-width: 120px; }
+.check-item { display: flex; align-items: center; gap: 6px; padding-bottom: 8px; font-size: 13px; }
+.button-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+.hint { color: var(--muted); font-size: 12px; margin: 6px 0 0; }
+.badge { display: inline-flex; border-radius: 999px; padding: 2px 8px; font-size: 12px; margin: 2px 4px 2px 0; }
+.badge.ok { background: #dcfae6; color: #027a48; }
+.badge.warn { background: #fef0c7; color: #b54708; }
+.badge.neutral { background: #eef2ff; color: #3730a3; }
+.worksheet-layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.7fr); gap: 12px; }
+.side-panel h3:not(:first-child) { margin-top: 16px; }
+.side-panel input, .side-panel textarea { width: 100%; margin-bottom: 8px; }
+.attachment-list { min-height: 30px; margin-bottom: 8px; }
+.inline-message { border-radius: 6px; padding: 8px 10px; margin-bottom: 12px; font-size: 13px; }
+.inline-message.ok { background: #dcfae6; color: #027a48; }
+.inline-message.error { background: #fee4e2; color: #b42318; }
+.trace-list { font-size: 12px; color: var(--muted); padding-left: 18px; margin: 0; }
+.draft-summary { display: flex; flex-direction: column; gap: 2px; }

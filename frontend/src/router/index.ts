@@ -7,6 +7,8 @@ const Pavement = () => import('@/views/pavement/index.vue')
 const Bridge = () => import('@/views/bridge/index.vue')
 const BridgeInfo = () => import('@/views/bridge_info/index.vue')
 const Tunnel = () => import('@/views/tunnel/index.vue')
+const TunnelDetail = () => import('@/views/tunnel/Detail.vue')
+const TunnelFire = () => import('@/views/tunnel/Fire.vue')
 const TrafficFacility = () => import('@/views/traffic_facility/index.vue')
 const Drainage = () => import('@/views/drainage/index.vue')
 const Green = () => import('@/views/green/index.vue')
@@ -30,6 +32,9 @@ const router = createRouter({
     { path: '/bridge', name: 'bridge', component: Bridge },
     { path: '/bridge_info', name: 'bridge_info', component: BridgeInfo },
     { path: '/tunnel', name: 'tunnel', component: Tunnel },
+    { path: '/tunnel/:id', name: 'tunnel-detail', component: TunnelDetail },
+    { path: '/tunnel/:id/fire', name: 'tunnel-fire-by-id', component: TunnelFire },
+    { path: '/tunnel-fire', name: 'tunnel-fire', component: TunnelFire },
     { path: '/traffic_facility', name: 'traffic_facility', component: TrafficFacility },
     { path: '/drainage', name: 'drainage', component: Drainage },
     { path: '/green', name: 'green', component: Green },
