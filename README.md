@@ -74,3 +74,35 @@ npm run dev
   `backend/app/routers/<模块>.py`，业务规则在 `backend/app/services/<模块>.py`。
 - 列表接口统一返回 `{ items, total, page, size }`，动作接口统一返回 `{ ok, message }`。
 - 状态流转只允许在 `app/services` 里改，路由层不做业务判断。
+
+## 隧道现场检修（通风/消防 · 离线草稿 · 检修单回写）
+
+针对「弱网下隧道详情页切到消防工作表后通风笔记丢失、重连重复显示检修单、
+回写后列表仍残留草稿」的端到端修复，代码位于
+`backend/app/inspection_store.py`、`backend/app/services/inspection.py`、
+`backend/app/routers/inspection.py`，前端位于
+`frontend/src/stores/inspection.ts`、`views/tunnel_detail/`、`views/tunnel_fire/`。
+
+复现/操作路径（三入口数据同源）：
+
+1. 隧道管养列表页 `/tunnel`：`GET /api/tunnel/inspection/digest` 给出每座
+   隧道的未收口草稿、设施待办、检修单计数；回写后同一草稿立即消失。
+2. 隧道详情页 `/tunnel/detail?code=隧道编号`：写通风笔记并「现场确认」。
+3. 消防工作表 `/tunnel/fire?code=隧道编号`：写消防检查项 → 合并草稿 →
+   回写检修单；弱网时命令进 localStorage 重传队列，重连后自动按序排空。
+
+规则口径：
+
+- 草稿先落本机（localStorage），通风/消防同一份工作草稿，切页不丢；
+- 合并以检查员最后确认的现场版本为准（`drafts/{id}/confirm`），被并草稿
+  保留 `provenance` 来源；旧草稿迁移必须带 `origin`（`/migrations/legacy-draft`）；
+- 草稿、附件（提交瞬间冻结为 `attachments_snapshot`）、工单号在同一事务提交，
+  任一步失败整体回滚（含隧道档案 `pending` 标记）；
+- 离线重传以「隧道编号 + 本地序列号 `client_seq`」幂等，重传返回原工单
+  （`created=false`），不重复建单；
+- 并发补写现场证据必须带 `base_version`，过期写入返回 `409` 并附带服务端
+  当前版本，绝不覆盖他人现场证据；
+- 一致性自检：`GET /api/tunnel/inspection/tunnels/{code}/consistency`
+  同时核对隧道档案、设施待办、工单、未收口草稿。
+
+后端回归：`cd backend && python3 -m pytest tests/`。
